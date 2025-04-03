@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Student</title>
+    
+</head>
+<body>
+    <h1>Add your details here</h1>
+
+    <div class="form-container">
+        <form action="{% url 'createnew' %}" method="POST" enctype ="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form><br>
+        <button><a href="{% url 'update' object.id %}">Update</a></button>
+    </div>
+
+</body>
+</html>

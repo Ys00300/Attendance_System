@@ -1,0 +1,70 @@
+body{
+    margin: 0 ;
+    padding: 0;
+    justify-content: center;
+    display: flex;
+    align-items:center;
+    min-height:100vh;
+    font-family:'Jost', sans-serif;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+
+}
+
+.main{
+    width: 350px;
+    height: 500px;
+    background: red;
+    overflow: hidden;
+    background: url("/static/images/image-bg.jpg") no-repeat center / cover;
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #000;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+ /* Changed font to a modern style */
+    font-size: 32px; /* Increased font size */
+    font-weight: bold; /* Made the text bold */
+    text-transform: uppercase; /* Makes text all uppercase for emphasis */
+    color: #0b0b0c; /* White color for contrast */
+    margin-bottom: 20px; /* Adds spacing below */
+}
+
+
+button{
+    width: 60%;
+    height: 40px;
+    margin: 10px auto ;
+    justify-content: center;
+    display: block;
+    color: #fff;
+    background:  #573b8a;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 20px;
+    outline: none;
+    border-radius: 5px;
+    transition: .2s ease-in;
+    cursor: pointer;
+}
+
+.register{
+    align-items: center;
+    display: flex;
+    color: #fff;
+    
+}
+
+button:hover{
+    background: #6d44b8;
+}
+
+.toggle-links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}

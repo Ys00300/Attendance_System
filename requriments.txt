@@ -1,0 +1,43 @@
+django   5.1.7
+pillow   11.1.0
+
+
+from django.contrib.auth.views import LogoutView
+from django.http import HttpResponseRedirect
+
+class CustomLogoutView(LogoutView):
+    def get_next_page(self):
+        """
+        Redirects users based on their role or group after logout.
+        """
+        # Get the next page from the URL query parameters (optional)
+        next_page = self.request.GET.get('next')
+
+        # If no next page is provided, check the user role
+        if not next_page:
+            if self.request.user.groups.filter(name='Admins').exists():
+                # Redirect admins to a custom admin dashboard
+                next_page = '/admin-dashboard/'
+            elif self.request.user.groups.filter(name='Editors').exists():
+                # Redirect editors to their own dashboard
+                next_page = '/editor-dashboard/'
+            else:
+                # Default redirect for all other users
+                next_page = '/home/'
+
+        # Return the determined next page
+        return next_page
+
+
+
+
+#user type logic
+# views.py
+def check_user_type(request):
+    user = request.user
+    if user.user_type == 'student':
+        # Do something for student
+        pass
+    elif user.user_type == 'teacher':
+        # Do something for teacher
+        pass
