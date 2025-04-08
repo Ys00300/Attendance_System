@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-_lsay_8+t8t4e^k_5si4**nz6&xs#n*q8xlt&5)=nk9ofw%m_1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = []
 
 
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'AttendanceSystem',
     'studentapp',
     'messageapp',
+    'teacherapp',
+
     
     
 ]
@@ -153,3 +156,12 @@ LOGIN_URL = 'login'
 
 # Redirect after logout to the login page
 LOGOUT_REDIRECT_URL = 'login'  # Replace with your login page URL name if needed
+
+
+#mail send settings 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'yashswami00300@gmail.com'
+EMAIL_HOST_PASSWORD = 'pjsjbafuiljzrsau'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
