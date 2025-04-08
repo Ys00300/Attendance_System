@@ -1,53 +1,38 @@
-from django.shortcuts import get_object_or_404
+from django.conf import settings
+from django.core.mail import send_mail
+from django.shortcuts import redirect
+from django.views.generic import FormView
 from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
-from django.views.generic.edit import CreateView
-from .models import Message
-from .forms import MessageForm
-from django.contrib.auth import get_user_model 
-from django.views.generic import ListView
-from django.views.generic import DetailView
-from django.http import Http404
+from django.http import HttpResponse
+from .forms import EmailForm
 
-class SendMessageView(CreateView):
-    model = Message
-    form_class = MessageForm
+
+
+# def send_mail_to_teacher(request):
+#         if request.method == 'POST':
+#             subject = "I'm on leave!"
+#             message = "This is a test message"
+#             from_email = settings.EMAIL_HOST_USER
+#             recipient_list = ['yashswami00300@gmail.com']  # spelling fix here
+
+#             send_mail(subject, message, from_email, recipient_list)
+#             return redirect('/')  # specify a URL or a named URL pattern
+#         return redirect('/')
+
+class SendEmailView(FormView):
     template_name = 'send_message.html'
-
+    form_class = EmailForm
+    success_url = reverse_lazy('home')
+    
     def form_valid(self, form):
-        receiver = get_object_or_404(get_user_model(), id=self.kwargs['receiver_id'])  # Get receiver from URL
-        if self.request.user == receiver:
-            return HttpResponseForbidden("You cannot send a message to yourself.")
+        subject = form.cleaned_data['subject']
+        from_email = settings.EMAIL_HOST_USER
+        message = form.cleaned_data['message']
+        recipient = form.cleaned_data['recipient']
+      
 
-        # Set the sender and receiver
-        form.instance.sender = self.request.user
-        form.instance.receiver = receiver
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('inbox')  # Redirect to inbox after sending the message
-
-
-class InboxView(ListView):
-    model = Message
-    template_name = 'inbox.html'
-    context_object_name = 'messages'
-
-    def get_queryset(self):
-        # Only fetch messages where the logged-in user is the receiver
-        return Message.objects.filter(receiver=self.request.user).order_by('-sent_at')
-    
-    
-class ReadMessageView(DetailView):
-    model = Message
-    template_name = 'read_message.html'
-    context_object_name = 'message'
-
-    def get_object(self):
-        # Ensure the message belongs to the logged-in user
-        message = super().get_object()
-        if message.receiver != self.request.user:
-            raise Http404("Message not found.")
-        message.mark_as_read()  # Mark the message as read
-        return message
+        try:
+            send_mail(subject,message,from_email,[recipient])
+            return super().form_valid(form)
+        except Exception as e:
+            return HttpResponse(f'Failed to send email :{e}')

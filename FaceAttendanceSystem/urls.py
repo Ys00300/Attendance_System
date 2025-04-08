@@ -25,6 +25,8 @@ urlpatterns = [
     path('',include('AttendanceSystem.urls')),
     path('',include('studentapp.urls')),
     path('',include('messageapp.urls')),
+    path('',include('teacherapp.urls')),
+    
     
     
 ]

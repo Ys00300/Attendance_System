@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <H1>Welcom back</H1>
+    <h1>{{ object.username }}</h1>
+<p>{{ object.email }}</p>
+<p>{{ object.gender}}</p>
+<p>{{ object.en_Number}}</p>
+<p>{{ object.branch}}</p>
+
+
+<button><a href="{% url 'home' %}">Home</a></button>
+<button><a href="{% url 'update_student' object.id %}">Update</a></button>
+</body>
+</html>
+
+{% comment %} {% if object.image %}
+<img src =  "{{object.image.url}}" alt= 'Image not found' height= 150px , width = 150px>
+{% endif %} {% endcomment %}
