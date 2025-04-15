@@ -3,23 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Welcome Back</title>
+    <style>
+        /* Dark Theme Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
 
+        h1, h2 {
+            color: #fff;
+        }
+
+        .content {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 800px;
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .profile-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .text-info {
+            flex: 1;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4CAF50;
+        }
+
+        p {
+            font-size: 18px;
+            color: #bbb;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:focus {
+            outline: none;
+        }
+    </style>
 </head>
 <body>
-    <H1>Welcom back</H1>
-    <h1>{{ object.username }}</h1>
-<p>{{ object.email }}</p>
-<p>{{ object.gender}}</p>
-<p>{{ object.en_Number}}</p>
-<p>{{ object.branch}}</p>
+    <div class="content">
+        <div class="profile-details">
+            <div class="text-info">
+                <h1>{{ object.get_user_type_display }} Profile</h1>
+                <h2>{{ object.username }}</h2>
+    
+                <p>Email: {{ object.email }}</p>
+                <p>Student: {{ request.user.first_name }}</p>
+    
+                {% if object.user_type == "student" %}
+                    <p>Enrollment Number: {{ object.en_Number }}</p>
+                {% endif %}
+    
+                <p>Branch: {{ object.branch }}</p>
+                <p>Date of Creation: {{ object.date_of_creation }}</p>
+            </div>
+    
+            <div>
+                {% if object.profile_image %}
+                    <!-- Show uploaded image -->
+                    <img src="{{ object.profile_image.url }}" alt="Profile Image" class="profile-image">
+                {% else %}
+                    <!-- Show initial letter avatar -->
+                    <div class="profile-placeholder">
+                        {{ object.username|slice:":1"|upper }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    
+        <div class="buttons">
+            <button><a href="{% url 'home' %}">Home</a></button>
+            <button><a href="{% url 'update_student' object.id %}">Update</a></button>
+        </div>
+    </div>
+    
 
-
-<button><a href="{% url 'home' %}">Home</a></button>
-<button><a href="{% url 'update_student' object.id %}">Update</a></button>
 </body>
 </html>
-
-{% comment %} {% if object.image %}
-<img src =  "{{object.image.url}}" alt= 'Image not found' height= 150px , width = 150px>
-{% endif %} {% endcomment %}

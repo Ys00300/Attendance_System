@@ -3,19 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
+    <title>Update Profile</title>
+    <style>
+        /* Dark Theme Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .form-container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"],
+        form input[type="file"],
+        form select,
+        form textarea {
+            background-color: #333;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        form input[type="submit"] {
+            background-color: #4CAF50; /* Green color */
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #45a049; /* Slightly darker green on hover */
+        }
+
+        form input[type="submit"]:focus {
+            outline: none;
+        }
+
+        /* Optional: Adjust the spacing and borders for better form layout */
+        form label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+    </style>
 </head>
 <body>
-    <h1>Update Profile</h1>
 
-    <div class="form-container" >
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value = "Submit">
-        </form><br>
-       
-    </div>
+    <h1> Update profile</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- CustomUserForm -->
+        {{ teacher_form.as_p }}
+        {{ subject_form.as_p }}
+        <button type="submit">Update</button>
+      </form>
+      
+    
+<script>
+    const subjectToCode = {
+        'ML': 'ML0030',
+        'AI': 'AI0020',
+        'DS': 'DS0040',
+    };
+
+    document.getElementById('id_subject_name').addEventListener('change', function () {
+        const selected = this.value;
+        const codeField = document.getElementById('id_course_code');
+        codeField.value = subjectToCode[selected] || '';
+    });
+</script>
+    
 </body>
 </html>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect , get_object_or_404
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegistrationForm
@@ -7,8 +7,11 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
 from django.views import View
+from finalAttendance.models import Subject
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 from .models import CustomUser
 
@@ -59,21 +62,30 @@ class CustomLogoutView(LogoutView) :
         return next_page
     
 
-#login required (if user want to access home page without login or register)
-class HomeView(LoginRequiredMixin,TemplateView):
+
+class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'home.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user_name'] = self.request.user.username
+
+        # Show message only if profile is not updated AND message not shown before
+        user = self.request.user
+        if not hasattr(user, 'teacher') and not self.request.session.get('profile_warning_shown'):
+            messages.warning(self.request, 'Please update your profile first.')
+            self.request.session['profile_warning_shown'] = True  # Set flag to avoid showing again
+
         return context
+
     
-    
-#login required (if user want to access home page without login or register)
+
 class TeacherHomeView(LoginRequiredMixin,TemplateView):
-    template_name = 'teacherHome.html'
+    template_name = 'teacherhome.html' 
     
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['user_name'] = self.request.user.username
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        teacher = self.request.user.teacher  
+        context['subject'] = Subject.objects.filter(teachers=teacher)
+        
+        return context

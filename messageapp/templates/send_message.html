@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Leave</title>
-    
+    <title>Send Message</title>
 </head>
 <body>
-     <form action="{% url 'send_mail' %}" method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Send Mail</button>
+    <h1>Send Attendance Notification</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send Email</button>
     </form>
-    
-  
-    <p><a href="{% url 'home' %}">Back to home</a></p>
-
 </body>
 </html>

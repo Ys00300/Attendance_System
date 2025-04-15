@@ -1,0 +1,45 @@
+<!-- attendance_summary.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Summary</title>
+</head>
+<body>
+
+<h1>Attendance Summary</h1>
+
+<p>Today's Date: {{ today }}</p>
+<h2>Mark Attendance - {{ subject.subject_name }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <table border="1">
+        <tr>
+            <th>Student</th>
+            <th>Status</th>
+
+        </tr>
+        {% for link in student_teacher_links %}
+        <tr>
+            <td>{{ link.student.username }}</td>
+            <td>
+                <label>
+                    <input type="radio" name="status_{{ link.id }}" value="Present" required> Present
+                </label>
+                <label>
+                    <input type="radio" name="status_{{ link.id }}" value="Absent" > Absent
+                </label>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <button type="submit">Submit Attendance</button>
+</form>
+
+
+</body>
+</html>
