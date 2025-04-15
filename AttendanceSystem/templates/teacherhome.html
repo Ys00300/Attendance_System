@@ -1,48 +1,96 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Teacher's Home Page</title>
+  <title>Home</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <h3>DashBoard</h3>
-    </div>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <a class="navbar-brand font-weight-bold" href="#">Dashboard</a>
+    <button class="navbar-toggle d-lg-none" type="button" data-toggle="collapse" data-target="#collapseNavbarid"
+    aria-label="Toggle navigation">
+    <span class="navbar-togler-icon"></span>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      
-        
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'login' %}">Logout</a></li>
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'detail_student' pk=request.user.pk %}">Profile</a></li>
-            <li><a href="#">Manual Attendance</a></li>
-            <li><a href="#">Attendance List</a></li>
-            
-           </ul>
+    </button>
+    <div class="collapse navbar-collapse" id="collapseNavbarid">
+      <ul class="navbar-nav mr-auto mt-2 w-50 d-flex justify-content-around">
+        <li class="nav-items active">
+          <a class="nav-link font-weight-bold" href="{% url 'teacher_details' pk=request.user.pk %}">Update Profile <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-items ">
+
+          {% for s in subject %}
+          <a class="nav-link font-weight-bold" href="{% url 'mark_attendance' s.id %}">Mark Attendance</a>
+      {% endfor %}
+        </li>
+        <li class="nav-items ">
+          <a class="nav-link font-weight-bold" href="#">Attendance List</a>
+        </li>
+        <li class="nav-items">
+          <a class="nav-link font-weight-bold" href="{% url 'login' %}">Logout</a>
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+
+      <div class="custom-control custom-switch mr-5">
+        <input type="checkbox" class="custom-control-input" id="selector">
+        <label class="custom-control-label" for="selector">Dark Mode</label>
+      </div>
+    </div>
+  </nav>
+  
+  
+
+  <div class="container">
+    <div class="row d-flex align-content-center"style="height:500px;">
+</div>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+      // Check localStorage for dark mode preference on page load
+      if(localStorage.getItem('darkMode') === 'enabled') {
+        $("body").addClass("bg-secondary");
+        $("nav").addClass("navbar-dark bg-dark");
+        $(".custom-control-label").addClass("text-white");
+        $("h1").addClass("text-white");
+        $("h5").addClass("text-white");
+        $('#selector').prop('checked', true); // Ensure the switch reflects the dark mode setting
+      }
+    
+      // Toggle dark mode and save preference in localStorage
+      $('#selector').change(function(){
+        $("body").toggleClass("bg-secondary");
+        $("nav").toggleClass("navbar-dark bg-dark");
+        $(".custom-control-label").toggleClass("text-white");
+        $("h1").toggleClass("text-white");
+        $("h5").toggleClass("text-white");
+    
+        // Save the preference to localStorage
+        if ($("body").hasClass("bg-secondary")) {
+          localStorage.setItem('darkMode', 'enabled');
+        } else {
+          localStorage.setItem('darkMode', 'disabled');
+        }
+      });
+    });
+    
+
+  </script>
 
 </body>
 </html>

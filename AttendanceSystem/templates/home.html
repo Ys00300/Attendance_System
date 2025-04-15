@@ -4,45 +4,134 @@
   <title>Home</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+  <!-- Header Section -->
+  <header>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+      <a class="navbar-brand font-weight-bold" href="#">DashBoard</a>
+      <button class="navbar-toggle d-lg-none" type="button" data-toggle="collapse" data-target="#collapseNavbarid" aria-label="Toggle navigation">
+        <span class="navbar-togler-icon"></span>
       </button>
-      <h3>Home</h3>
+      <div class="collapse navbar-collapse" id="collapseNavbarid">
+        <ul class="navbar-nav mr-auto mt-2 w-50 d-flex justify-content-around">
+          <li class="nav-item active">
+            <a class="nav-link font-weight-bold" href="{% url 'detail_student' pk=request.user.pk %}">Update Profile <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="{% url 'send_mail' %}">Message</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="#">Attendance List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="{% url 'login' %}">Logout</a>
+          </li>
+        </ul>
+
+        <div class="custom-control custom-switch mr-5">
+          <input type="checkbox" class="custom-control-input" id="selector">
+          <label class="custom-control-label" for="selector">Dark Mode</label>
+        </div>
+      </div>
+    </nav>
+
+    
+  <!-- Main Content Section -->
+<div class="container mt-4">
+
+  <!-- Display Django messages -->
+  {% if messages %}
+    <div class="alert-container">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="row d-flex align-content-center" style="height:500px;">
+    <!-- Your content goes here -->
+  </div>
+</div>
+
+
+
+  </header>
+
+  <!-- Main Content Section -->
+  <div class="container">
+    <div class="row d-flex align-content-center" style="height:500px;">
+      <!-- Your content goes here -->
+    </div>
+  </div>
+
+  
+  <!-- Footer Section -->
+  <footer class="bg-light text-center text-lg-start mt-5 py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="text-muted mb-0">© 2025 Your Company</p>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center">
+            <a href="#" class="text-muted mx-2">Privacy Policy</a>
+            <a href="#" class="text-muted mx-2">Terms of Service</a>
+            <a href="#" class="text-muted mx-2">Contact Us</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      
-        
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'login' %}">Logout</a></li>
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'detail_student' pk=request.user.pk %}">Profile</a></li>
-            <li><a href="{% url 'send_mail' %}">Message</a></li>
-            <li><a href="#">Attendance List</a></li>
-            
-           </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+  </footer>
+
+  <!-- Script to handle dark mode toggle -->
+  <script>
+    $(document).ready(function(){
+      // Check localStorage for dark mode preference on page load
+      if(localStorage.getItem('darkMode') === 'enabled') {
+        $("body").addClass("bg-secondary");
+        $("nav").addClass("navbar-dark bg-dark");
+        $(".custom-control-label").addClass("text-white");
+        $("h1").addClass("text-white");
+        $("h5").addClass("text-white");
+        $('#selector').prop('checked', true); // Ensure the switch reflects the dark mode setting
+      }
+
+      // Toggle dark mode and save preference in localStorage
+      $('#selector').change(function(){
+        $("body").toggleClass("bg-secondary");
+        $("nav").toggleClass("navbar-dark bg-dark");
+        $(".custom-control-label").toggleClass("text-white");
+        $("h1").toggleClass("text-white");
+        $("h5").toggleClass("text-white");
+
+        // Save the preference to localStorage
+        if ($("body").hasClass("bg-secondary")) {
+          localStorage.setItem('darkMode', 'enabled');
+        } else {
+          localStorage.setItem('darkMode', 'disabled');
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>

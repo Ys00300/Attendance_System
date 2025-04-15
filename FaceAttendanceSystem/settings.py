@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'studentapp',
     'messageapp',
     'teacherapp',
+    'finalAttendance',
+
 
     
     

@@ -23,10 +23,10 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('AttendanceSystem.urls')),
-    path('',include('studentapp.urls')),
-    path('',include('messageapp.urls')),
-    path('',include('teacherapp.urls')),
-    
+    path('student/',include('studentapp.urls')),
+    path('send-mail/',include('messageapp.urls')),
+    path('teacher/',include('teacherapp.urls')),
+    # path('attendanceList/',include('finalAttendance.urls')),
     
     
 ]
