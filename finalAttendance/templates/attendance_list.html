@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Attendance - {{ role|title }}</h2>
+
+{% if attendance_list %}
+  <table border="1">
+    <tr>
+      <th>Student</th>
+      <th>Teacher</th>
+      <th>Date</th>
+      <th>Status</th>
+    </tr>
+    {% for record in attendance_list %}
+      <tr>
+        <td>{{ record.student_teacher.student.username }}</td>
+        <td>{{ record.student_teacher.teacher.user.first_name }}</td>
+        <td>{{ record.date }}</td>
+        <td>{{ record.status }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>No attendance records found.</p>
+{% endif %}
+
+</body>
+</html>
