@@ -10,4 +10,4 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ['username', 'email', 'en_Number']
     ordering = ['username']
     
-# admin.site.register(CustomUser,CustomUserAdmin)
+# admin.site.register(CustomUser,CustomUserAdmin) also use to register the model at admin panel

@@ -1,6 +1,7 @@
 from django.db import models
 from AttendanceSystem.models import CustomUser
 from teacherapp.models import Teacher
+from studentapp.models import Student
 # Create your models here.
 
 class Subject(models.Model):
@@ -33,7 +34,7 @@ class StudentTeacher(models.Model):
     student = models.ForeignKey('AttendanceSystem.CustomUser',on_delete=models.CASCADE,related_name='student_teacher')
     teacher = models.ForeignKey('teacherapp.Teacher',on_delete=models.CASCADE,related_name='teacher_student')
     subject = models.ForeignKey('Subject', on_delete=models.CASCADE, related_name='student_teacher_links')
-    
+    # student = models.ForeignKey('studentapp.Student', on_delete=models.CASCADE)
 
 class Attendance(models.Model):
     student_teacher = models.ForeignKey('StudentTeacher', on_delete=models.CASCADE, related_name='attendance_records')

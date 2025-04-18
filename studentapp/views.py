@@ -55,15 +55,4 @@ class StudentDetailview(LoginRequiredMixin,DetailView):
     model = CustomUser
     template_name = 'detail.html'
     
-    # model = CustomUser
-    # template_name = 'detail.html'
-
-    
-    # def get_context_data(self, **kwargs):
-    #     # breakpoint()
-    #     context = super().get_context_data(**kwargs)
-        
-             
-
-    #     return context
-
+  

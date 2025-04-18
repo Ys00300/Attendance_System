@@ -4,7 +4,7 @@ from .models import Attendance, StudentTeacher
 
 class AttendanceListView(LoginRequiredMixin, TemplateView):
     template_name = 'attendance_list.html'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
@@ -19,14 +19,12 @@ class AttendanceListView(LoginRequiredMixin, TemplateView):
 
 
         elif hasattr(user, 'student'):
-            student = user.student
+            student = user
             context['role'] = 'student'
-         
             context['attendance_list'] = Attendance.objects.filter(
                 student_teacher__student=student
             )
         else:
-           
             context['attendance_list'] = []
             context['role'] = 'unknown'
 
